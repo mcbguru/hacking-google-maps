@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+<title>MCslp Maps Chapter 12, Ex 2</title>
+<script src="http://maps.google.com/maps?file=api&v=1&key=YOURKEY"
+      type="text/javascript">
+</script>
+<script src="tphoto.16.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+var map;
+var index = 0;
+var message;
+var mapcontrols;
+var lastpoint;
+var photo;
+var opacity = 50;
+var mapobjects = [];
+
+
+function MapObject (topleftx,toplefty,botrightx,botrighty,text) {
+    if (topleftx < botrightx) {
+        this.minX = topleftx;
+        this.maxX = botrightx;
+    } else {
+        this.minX = botrightx;
+        this.maxX = topleftx;
+    }
+
+    if (toplefty < botrighty) {
+        this.minY = toplefty;
+        this.maxY = botrighty;
+    } else {
+        this.minY = botrighty;
+        this.maxY = toplefty;
+    }
+    this.description = text;
+    this.inbounds = inbounds;
+    function inbounds(x,y) {
+        if (((x > this.minX) && (x < this.maxX)) &&
+            ((y > this.minY) && (y < this.maxY))) {
+            message.innerHTML = this.description;
+        }
+    }
+}
+
+function recenter() {
+    map.centerAndZoom(new GPoint(-97.58790493011475, 35.28039711620333), 1);
+    window.setTimeout('recenter()',10000);
+}
+
+function onLoad() {
+    if (GBrowserIsCompatible()) {
+    	message = document.getElementById("message");
+	mapcontrols = document.getElementById("mapcontrols");
+	map = new GMap(document.getElementById("map"));
+        map.setMapType(G_SATELLITE_TYPE);
+	map.centerAndZoom(new GPoint(-97.58790493011475, 35.28039711620333), 1);
+        map.addControl(new GLargeMapControl());
+
+        mapobjects.push(new MapObject(-97.58590936660767, 35.27654336061367, 
+                                      -97.58260488510132, 35.28360260045482,
+                                      'Car Park'));
+
+        mapobjects.push(new MapObject(-97.58904218673706, 35.282008632343754,
+                                      -97.58638143539429, 35.278137436300966,
+                                      'Sales Office'));
+
+        mapobjects.push(new MapObject(-97.59279727935791, 35.283585084492245,
+                                      -97.58638143539429, 35.282376473923584,
+                                      'Packaging/Delivery Office'));
+
+        mapobjects.push(new MapObject(-97.59277582168579, 35.282008632343754,
+                                      -97.59017944335938, 35.278137436300966,
+                                      'Admin Office'));
+
+        mapobjects.push(new MapObject(-97.59277582168579, 35.27776957546562,
+                                      -97.5864028930664, 35.27657839558136,
+                                      'IT/Support Services'));
+
+
+        window.setTimeout('recenter()',10000);
+
+        GEvent.addListener(map, 'maptypechanged', function() {
+            photo.setOpacity(50);
+            opacity = 50;
+        });
+
+        GEvent.addListener(map, 'click', function(overlay,point) {
+            message.innerHTML = 'Empty';
+            for(var i=0;i<mapobjects.length;i++) {
+                mapobjects[i].inbounds(point.x,point.y);
+            }
+        });
+
+        photo = new TPhoto();
+        photo.id = 'overlay';
+        photo.src = 'ch12-overlay.png';
+        photo.percentOpacity = 50;
+        photo.anchorTopLeft = new GPoint(-97.59286165237427, 35.28367266426725);
+        photo.anchorBottomRight = new GPoint(-97.58256196975708, 35.27654336061367);
+        map.addTPhoto(photo);
+    }
+}
+
+function changeopacity(changevalue) {
+    var newopacity = opacity + changevalue;
+
+    if (newopacity < 0) {
+        return;
+    }
+    if (newopacity > 100) {
+        return;
+    }
+    photo.setOpacity(newopacity);
+    opacity = newopacity;
+}
+
+</script>
+</head>
+<body onload="onLoad()">
+<table cellspacing="15" cellpadding="0" border="0">
+<tr valign="top">
+<td><div id="map" style="width: 800px; height: 600px"></div></td>
+<td><h1>New Office Grand Plan</h1><div id="message">Click Map for Info</div><br/>
+<h1>Overlay Control</h1><a href="#" onClick="changeopacity(-10);">Reduce overlay</a>&nbsp;|&nbsp;<a href="#" onClick="changeopacity(10);">Increase overlay</a><br/>
+<a href="#" onClick="map.setMapType(G_MAP_TYPE)">Show Map</a>&nbsp;|&nbsp;<a href="#" onClick="map.setMapType(G_SATELLITE_TYPE)">Show Satellite</a>&nbsp;|&nbsp;<a href="#" onClick="map.setMapType(G_HYBRID_TYPE)">Show Hybrid</a></td>
+</tr>
+</table>
+</body>
+</html>

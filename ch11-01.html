@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+  <title>MCslp Maps Chapter 11, Ex 01</title>
+  <script src="http://maps.google.com/maps?file=api&v=1&key=YOURKEY"
+      type="text/javascript">
+  </script>
+
+  <script type="text/javascript">
+  //<![CDATA[
+
+  var map;
+  var index = 0;
+  var types = [];
+var markers = [];
+var markindex = 0;
+  var infopanel;
+  var message;
+
+
+function entitymarker(lat,lng,title,type,marker,info) {
+    this.lat = lat;
+    this.lng = lng;
+    this.title = title;
+    this.type = type;
+    this.marker = marker;
+    this.info = info;
+}
+
+  function onLoad() {
+      if (GBrowserIsCompatible()) {
+	  infopanel = document.getElementById("infopanel");
+	  message = document.getElementById("message");
+	  map = new GMap(document.getElementById("map"));
+	  map.centerAndZoom(new GPoint(-2.944336,53.644638), 10);
+	  map.addControl(new GSmallZoomControl());
+	  showentitylist();
+      }
+  }
+
+  function showentitylist() {
+      index = 0;
+      types = [];
+      message.innerHTML = 'Select a business type';
+      infopanel.innerHTML = '';
+      var request = GXmlHttp.create();
+      request.open('GET','/examples/ch11-03.cgi?m=entitylist', true);
+      request.onreadystatechange = function() {
+	  if (request.readyState == 4) {
+	      var xmlsource = request.responseXML;
+	      var typelist = xmlsource.documentElement.getElementsByTagName("type");
+	      for (var i=0;i < typelist.length;i++) {
+		  types.push(typelist[i].getAttribute("typename"));
+		  infopanel.innerHTML = infopanel.innerHTML + 
+		      '<a href="#" onClick="loadentity(' + 
+		      i +
+		      ');">' + 
+		      typelist[i].getAttribute("typename") + 
+		      '</a>&nbsp;|&nbsp;' +
+		      '<a href="#" onClick="clearmarkers(' + 
+		      "'" + typelist[i].getAttribute("typename") + "'" +
+		      ');">Hide ' + 
+		      typelist[i].getAttribute("typename") + 
+                      '</a><br/>';
+	      }
+	  }
+      }
+      request.send(null);
+  }
+
+  function movemap(index) {
+      map.recenterOrPanToLatLng(new GPoint(markers[index].lng,
+                                           markers[index].lat));
+      markers[index].marker.openInfoWindowXslt(markers[index].info,"/examples/ch08-12.xsl");
+  }
+
+function clearmarkers(type) {
+    var keeplist = [];
+    for (var i=0;i<markers.length;i++) {
+        if (markers[i].type == type) { 
+            map.removeOverlay(markers[i].marker);
+        } else {
+            keeplist.push(markers[i]);
+        }
+    }
+    markers = [];
+    for (var i=0;i<keeplist.length;i++) {
+        markers.push(keeplist[i]);
+    }
+}
+
+function addmarker(x,y,title,info,icon,type) {
+    
+    var point = new GPoint(parseFloat(x),parseFloat(y));
+    var marker = new GMarker(point,icon);
+    GEvent.addListener(marker,
+                       'click',
+			 function() {
+        marker.openInfoWindowXslt(info,"/examples/ch08-12.xsl");
+    }
+                       );
+    map.addOverlay(marker);
+    markers.push(new entitymarker(y,x,title,type,marker,info));
+    infopanel.innerHTML = infopanel.innerHTML + 
+        '<a href="#" onClick="movemap(' + markindex + ');">' + 
+        title + 
+        '</a><br/>';
+    markindex++;
+}    
+
+  function loadentity(index) {
+      message.innerHTML = types[index];
+      var entitytype = types[index];
+      var baseIcon = new GIcon();
+      baseIcon.iconSize = new GSize(32,32);
+      baseIcon.iconAnchor = new GPoint(0,32);
+      baseIcon.infoWindowAnchor = new GPoint(32,0);
+      baseIcon.image = "http://maps.mcslp.com/examples/" + types[index].toLowerCase() + ".png";
+      infopanel.innerHTML = '';
+      var points = [];
+      var request = GXmlHttp.create();
+      request.open('GET','/examples/ch11-03.cgi?m=getmarkers&entity='+types[index], true);
+      request.onreadystatechange = function() {
+	  if (request.readyState == 4) {
+	      var xmlsource = request.responseXML;
+	      var markerlist = xmlsource.documentElement.getElementsByTagName("marker");
+	      var infowindow = xmlsource.documentElement.getElementsByTagName("infowindow");
+	      for (var i=0;i < markerlist.length;i++) {
+		  addmarker(parseFloat(markerlist[i].getAttribute("lng")),
+			    parseFloat(markerlist[i].getAttribute("lat")),
+			    markerlist[i].getAttribute("title"),
+			    infowindow[i],
+                            baseIcon,
+                            entitytype);
+		  points.push(new GPoint(parseFloat(markerlist[i].getAttribute("lng")),
+                                         parseFloat(markerlist[i].getAttribute("lat"))));
+	      }
+	      recenterandzoom(markers);
+	      infopanel.innerHTML = infopanel.innerHTML + 
+	         '<br/>' + 
+	         '<a href="#" onClick="showentitylist()">Back to business types</a><br/>';
+	  }
+      }
+      request.send(null);
+  }
+
+function recenterandzoom(markers) {
+    var latpoints = [];
+    var lngpoints = [];
+
+    for(var i=0;i<markers.length;i++) {
+	latpoints.push(markers[i].lat);
+	lngpoints.push(markers[i].lng);
+    }
+
+    latpoints.sort(function(x,y) { return x-y; });
+    lngpoints.sort(function(x,y) { return x-y; });
+    var newlat = latpoints[0] + ((latpoints[latpoints.length-1] - latpoints[0])/2);
+    var newlng = lngpoints[0] + ((lngpoints[lngpoints.length-1] - lngpoints[0])/2);
+
+    var newpoint = new GPoint(parseFloat(newlng),parseFloat(newlat));
+
+    var idealspan = new GSize(parseFloat(Math.abs(lngpoints[lngpoints.length-1]-lngpoints[0])),
+			      parseFloat(Math.abs(latpoints[latpoints.length-1]-latpoints[0])));
+
+    map.zoomTo(1);
+    var idealzoom = 1;
+
+    for(var i=1;i<16;i++) {
+	var currentsize = map.getSpanLatLng();
+		if ((currentsize.width < idealspan.width) ||
+	    (currentsize.height < idealspan.height)) {
+	    map.zoomTo(i);
+	    idealzoom = i;
+	}		
+	else {
+	    break;
+	}
+    }
+
+    map.centerAndZoom(newpoint,idealzoom);
+}
+
+  //]]>
+  </script>
+  </head>
+  <body onload="onLoad()">
+  <table cellspacing="15" cellpadding="0" border="0">
+  <tr valign="top">
+  <td><div id="map" style="width: 800px; height: 600px"></div></td>
+  <td><h1><div id="message"></div></h1><div id="infopanel"></div></td>
+  </tr>
+  </table>
+  </body>
+</html>

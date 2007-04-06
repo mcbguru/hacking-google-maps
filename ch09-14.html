@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+  <title>MCslp Maps Chapter 9, Ex 14</title>
+  <script src="http://maps.google.com/maps?file=api&v=1&key=YOURKEY"
+      type="text/javascript">
+  </script>
+
+  <script type="text/javascript">
+  //<![CDATA[
+
+  var map;
+  var points = [];
+  var index = 0;
+  var cities = [];
+  var markers = [];
+  var markerinfo = []
+  var infopanel;
+  var message;
+
+  function onLoad() {
+      if (GBrowserIsCompatible()) {
+	  infopanel = document.getElementById("infopanel");
+	  message = document.getElementById("message");
+	  map = new GMap(document.getElementById("map"));
+	  map.centerAndZoom(new GPoint(-2.944336,53.644638), 10);
+	  map.addControl(new GSmallZoomControl());
+	  showcitylist();
+      }
+  }
+
+  function showcitylist() {
+      map.clearOverlays();
+      index = 0;
+      points = [];
+      markers = [];
+      markerinfo = [];
+      cities = [];
+      message.innerHTML = 'Select a City';
+      infopanel.innerHTML = '';
+      var request = GXmlHttp.create();
+      request.open('GET','/examples/ch09-16.cgi?m=citylist', true);
+      request.onreadystatechange = function() {
+	  if (request.readyState == 4) {
+	      var xmlsource = request.responseXML;
+	      var citylist = xmlsource.documentElement.getElementsByTagName("city");
+	      for (var i=0;i < citylist.length;i++) {
+		  cities.push(citylist[i].getAttribute("cityname"));
+		  infopanel.innerHTML = infopanel.innerHTML + 
+		      '<a href="#" onClick="loadcity(' + 
+		      i +
+		      ');">' + 
+		      citylist[i].getAttribute("cityname") + 
+		      '</a><br/>';
+	      }
+	  }
+      }
+      request.send(null);
+  }
+
+  function movemap(index) {
+      map.recenterOrPanToLatLng(points[index]);
+      markers[index].openInfoWindowXslt(markerinfo[index],"/examples/ch09-12.xsl");
+  }
+
+  function addmarker(x,y,title,info,index) {
+      var point = new GPoint(parseFloat(x),parseFloat(y));
+      points.push(point);
+      var marker = new GMarker(point);
+      markers.push(marker);
+      markerinfo.push(info);
+      GEvent.addListener(marker,
+			 'click',
+			 function() {
+	  marker.openInfoWindowXslt(info,"/examples/ch09-12.xsl");
+      }
+			 );
+      map.addOverlay(marker);
+      infopanel.innerHTML = infopanel.innerHTML + 
+	  '<a href="#" onClick="movemap(' + index + ');">' + 
+	  title + 
+	  '</a><br/>';
+      index++;
+  }    
+
+  function loadcity(index) {
+      message.innerHTML = 'Restaurants in ' + cities[index];
+      infopanel.innerHTML = '';
+      var latpoints = [];
+      var lngpoints = [];
+      var request = GXmlHttp.create();
+      request.open('GET','/examples/ch09-16.cgi?m=getmarkers&city='+cities[index], true);
+      request.onreadystatechange = function() {
+	  if (request.readyState == 4) {
+	      var xmlsource = request.responseXML;
+	      var markerlist = xmlsource.documentElement.getElementsByTagName("marker");
+	      var infowindow = xmlsource.documentElement.getElementsByTagName("infowindow");
+	      for (var i=0;i < markerlist.length;i++) {
+		  addmarker(parseFloat(markerlist[i].getAttribute("lng")),
+			    parseFloat(markerlist[i].getAttribute("lat")),
+			    markerlist[i].getAttribute("title"),
+			    infowindow[i],
+			    i);
+		  latpoints.push(parseFloat(markerlist[i].getAttribute("lat")));
+		  lngpoints.push(parseFloat(markerlist[i].getAttribute("lng")));
+	      }
+	      var newcenter = calccenter(latpoints,lngpoints);
+	      map.centerAndZoom(newcenter,2);
+	      infopanel.innerHTML = infopanel.innerHTML + 
+	         '<br/>' + 
+	         '<a href="#" onClick="showcitylist()">Back to city list</a><br/>';
+	  }
+      }
+      request.send(null);
+  }
+
+  function calccenter(latpoints,lngpoints) {
+      latpoints.sort();
+      lngpoints.sort();
+      var newlat = latpoints[0] + ((latpoints[latpoints.length-1] - latpoints[0])/2);
+      var newlng = lngpoints[0] + ((lngpoints[lngpoints.length-1] - lngpoints[0])/2);
+      var newpoint = new GPoint(parseFloat(newlng),parseFloat(newlat));
+      return newpoint;
+  }
+
+  //]]>
+  </script>
+  </head>
+  <body onload="onLoad()">
+  <table cellspacing="15" cellpadding="0" border="0">
+  <tr valign="top">
+  <td><div id="map" style="width: 800px; height: 600px"></div></td>
+  <td><h1><div id="message"></div></h1><div id="infopanel"></div></td>
+  </tr>
+  </table>
+  </body>
+</html>

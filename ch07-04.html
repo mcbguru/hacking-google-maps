@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+  <title>MCslp Maps Chapter 7, Ex 4</title>
+  <script src="http://maps.google.com/maps?file=api&v=1&key=YOURKEY"
+      type="text/javascript">
+  </script>
+
+  <script type="text/javascript">
+  //<![CDATA[
+
+  var map;
+
+  function onLoad() {
+    if (GBrowserIsCompatible()) {
+    map = new GMap(document.getElementById("map"));
+    map.centerAndZoom(new GPoint(-0.64,52.909444), 2);
+    }
+  }
+
+  var marker;
+
+  function movemap(x,y) {
+      if (marker)
+      {
+          map.removeOverlay(marker);
+      }
+      var point = new GPoint(parseFloat(x),parseFloat(y));
+      map.recenterOrPanToLatLng(point);
+      marker = new GMarker(point);
+      map.addOverlay(marker);
+  }    
+
+  //]]>
+  </script>
+  </head>
+  <body onload="onLoad()">
+
+  <div id="map" style="width: 800px; height: 600px"></div>
+<ul>
+<li><a href="#" onClick="movemap(-0.6394,52.9114);">China Inn, Grantham</a></li>
+<li><a href="#" onClick="movemap(-0.64,52.909444);">One on Wharf, Grantham</a></li>
+<li><a href="#" onClick="movemap(-2.9638,54.4334);">Glass House, Ambleside</a></li>
+<li><a href="#" onClick="movemap(-122.3346,47.6133);">Dragonfish Asian Cafe, Seattle</a></li>
+</ul>
+  </body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+<title>MCslp Maps Chapter 12, Ex 1</title>
+<script src="http://maps.google.com/maps?file=api&v=1&key=YOURKEY"
+      type="text/javascript">
+</script>
+<script src="tlabel.10.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+var map;
+var index = 0;
+var selpanel;
+var mapcontrols;
+var lastpoint;
+var objectfinds = [];
+var trenchs = [];
+var ruins = [];
+
+function onLoad() {
+    if (GBrowserIsCompatible()) {
+    	selpanel = document.getElementById("selections");
+	mapcontrols = document.getElementById("mapcontrols");
+	map = new GMap(document.getElementById("map"));
+        map.setMapType(G_SATELLITE_TYPE);
+	map.centerAndZoom(new GPoint(-97.58790493011475, 35.28039711620333), 1);
+        map.addControl(new GLargeMapControl());
+        GEvent.addListener(map, 'click', function(overlay,point) {
+            lastpoint = point;
+        });
+    }
+}
+
+function addpoint(pointtype) {
+    if (lastpoint) {
+        entityname = document.getElementById("entityname");
+        color = '#f2efe9';
+
+        var label = new TLabel();
+        label.id = 'label' + index++;
+        label.anchorLatLng = lastpoint;
+        label.anchorPoint = 'topRight';
+        label.content = content;
+        label.percentOpacity = 50;
+
+        if (pointtype == 'object') {
+            objectfinds.push(label);
+            color = '#f20000';
+        }
+
+        if (pointtype == 'trench') {
+            trenchs.push(label);
+            color = '#f2ef00';
+        }
+
+        if (pointtype == 'ruin') {
+            ruins.push(label);
+            color = '#f2efe9';
+        }
+
+        if (pointtype == 'vase') {
+            objectfinds.push(label);
+            color = '#f20000';
+
+            label.content = '<div style="padding: 16px 24px 0px 0px; background: url(topright.png) no-repeat top right;"><div style="background-color: #f2efe9; padding: 2px;"><img src="woodvase.png" alt="" style="border: none;"></div></div>';
+        }
+        else {
+            if (entityname.value.length == 0) {
+                alert('You must give this point a name');
+                return;
+            }
+
+            var content = '<div style="padding: 16px 24px 0px 0px; background: url(topright.png) no-repeat top right;"><div style="background-color: ' + color + '; padding: 2px; font-size: 0.7em;"><div style="color: #0000ff; font-weight: bold">' + pointtype + '</div><nobr>' + entityname.value + '</nobr></div></div>';
+            label.content = content;
+        }
+
+        map.addTLabel(label);
+    }
+    else {
+        alert("No point has been set");
+    }
+}
+
+function showpoints(pointtype) {
+    for(var i=0;i<pointtype.length;i++) {
+        map.addTLabel(pointtype[i]);
+    }
+}
+
+function hidepoints(pointtype) {
+    for(var i=0;i<pointtype.length;i++) {
+        map.removeTLabel(pointtype[i]);
+    }
+}
+
+</script>
+</head>
+<body onload="onLoad()">
+<table cellspacing="15" cellpadding="0" border="0">
+<tr valign="top">
+  <td><div id="map" style="width: 800px; height: 600px"></div></td>
+  <td><h1>Overlay Selection</h1><div id="selections"></div><form action="#"><b>Entity title</b>:<input type="text" size="20" id="entityname"></form><br/>
+<a href="#" onClick="addpoint('vase')">Add Vase</a>&nbsp;|&nbsp;<a href="#" onClick="hidepoints(objectfinds)">Hide Vase</a>&nbsp;|&nbsp;<a href="#" onClick="showpoints(objectfinds)">Show Vases</a><br/>
+<a href="#" onClick="addpoint('object')">Add Object</a>&nbsp;|&nbsp;<a href="#" onClick="hidepoints(objectfinds)">Hide Objects</a>&nbsp;|&nbsp;<a href="#" onClick="showpoints(objectfinds)">Show Objects</a><br/>
+<a href="#" onClick="addpoint('trench')">Add Trench</a>&nbsp;|&nbsp;<a href="#" onClick="hidepoints(trenchs)">Hide Trenchs</a>&nbsp;|&nbsp;<a href="#" onClick="showpoints(trenchs)">Show Trenchs</a><br/>
+<a href="#" onClick="addpoint('ruin')">Add Ruin</a>&nbsp;|&nbsp;<a href="#" onClick="hidepoints(ruins)">Hide Ruins</a>&nbsp;|&nbsp;<a href="#" onClick="showpoints(ruins)">Show Ruins</a><br/>
+</td>
+  </tr>
+  </table>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+  <title>MCslp Maps Chapter 7, Ex 8</title>
+  <script src="http://maps.google.com/maps?file=api&v=1&key=YOURKEY"
+      type="text/javascript">
+  </script>
+
+  <script type="text/javascript">
+  //<![CDATA[
+
+  var map;
+
+  function onLoad() {
+    if (GBrowserIsCompatible()) {
+    map = new GMap(document.getElementById("map"));
+    map.centerAndZoom(new GPoint(-0.64,52.909444), 2);
+    addmarker(-0.6394,52.9114);
+    addmarker(-0.64,52.909444);
+    addmarker(-0.6376,52.9073);
+
+    var route = [];
+
+    route.push(new GPoint(-0.6467342376708984, 52.91519081031524));
+    route.push(new GPoint(-0.6466054916381836, 52.915527220441405));
+    route.push(new GPoint(-0.6440305709838867, 52.916122401186186));
+    route.push(new GPoint(-0.6434726715087891, 52.91578599568332));
+    route.push(new GPoint(-0.6442880630493164, 52.915294321401625));
+    route.push(new GPoint(-0.6411123275756836, 52.9104807941625));
+    route.push(new GPoint(-0.6398248672485352, 52.90952320075754));
+    route.push(new GPoint(-0.638279914855957, 52.90778912639283));
+    route.push(new GPoint(-0.6376361846923828, 52.90716794854011));
+	map.addOverlay(new GPolyline(route));
+    }
+  }
+
+  function addmarker(x,y) {
+      var point = new GPoint(parseFloat(x),parseFloat(y));
+      map.addOverlay(new GMarker(point));
+  }    
+
+  //]]>
+  </script>
+  </head>
+  <body onload="onLoad()">
+
+  <div id="map" style="width: 800px; height: 600px"></div>
+<ul>
+</ul>
+  </body>
+</html>

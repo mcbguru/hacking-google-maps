@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+<Folder>
+<name>banks</name>
+<open>0</open>
+<Placemark>
+<name>Yorkshire Bank</name>
+<address>10 High St,Grantham, NG31 6PU, United Kingdom</address>
+<Point>
+<coordinates>-0.642539,52.913,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Abbey</name>
+<address>1 St. Peters Hill,Grantham, NG31 6QB, United Kingdom</address>
+<Point>
+<coordinates>-0.64075,52.9112,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>HSBC Bank plc</name>
+<address>88 Westgate,Grantham, NG31 6LF, United Kingdom</address>
+<Point>
+<coordinates>-0.644091,52.9119,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Lloyds TSB Bank plc</name>
+<address>42 St. Peters Hill,Grantham, NG31 6QF, United Kingdom</address>
+<Point>
+<coordinates>-0.641202,52.9101,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Alliance &amp; Leicester plc</name>
+<address>34 St. Peters Hill,Grantham, NG31 6QF, United Kingdom</address>
+<Point>
+<coordinates>-0.641202,52.9101,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Bhandari Bros Ltd</name>
+<address>87 Harrowby Lane,Grantham, NG31 9LN, United Kingdom</address>
+<Point>
+<coordinates>-0.622729,52.9196,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>NatWest Bank plc</name>
+<address>27-28 St. Peters Hill,Grantham, NG31 6QG, United Kingdom</address>
+<Point>
+<coordinates>-0.641202,52.9101,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Barclays Bank plc</name>
+<address>33-35 High St,Grantham, NG31 6PH, United Kingdom</address>
+<Point>
+<coordinates>-0.641612,52.9117,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Lloyds TSB Easibank</name>
+<address>within Asda Store Union St,Grantham, NG31 6NZ, United Kingdom</address>
+<Point>
+<coordinates>-0.645635,52.9139,0</coordinates>
+</Point></Placemark>
+</Folder><Folder>
+<name>pharmacies</name>
+<open>0</open>
+<Placemark>
+<name>Lloyds Pharmacy</name>
+<address>14 Market Place,Grantham, NG31 6LJ, United Kingdom</address>
+<Point>
+<coordinates>-0.64394,52.9134,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Co-op Pharmacy</name>
+<address>103 Hornsby Rd,Grantham, NG31 7XD, United Kingdom</address>
+<Point>
+<coordinates>-0.660676,52.9016,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Barrowbygate Pharmacy</name>
+<address>176 Winchester Rd,Grantham, NG31 8RX, United Kingdom</address>
+<Point>
+<coordinates>-0.6632,52.9129,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Alma Park Pharmacy</name>
+<address>171 New Beacon Rd,Grantham, NG31 9LJ, United Kingdom</address>
+<Point>
+<coordinates>-0.624189,52.919,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Burrows &amp; Close</name>
+<address>62 London Rd,Grantham, NG31 6HR, United Kingdom</address>
+<Point>
+<coordinates>-0.638495,52.9063,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Superdrug Stores plc</name>
+<address>Unit 1-2 The Pantiles,Grantham, NG31 6EE, United Kingdom</address>
+<Point>
+<coordinates>-0.642728,52.9098,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Moss Pharmacy</name>
+<address>23b St. Peters Hill,Grantham, NG31 6QF, United Kingdom</address>
+<Point>
+<coordinates>-0.641202,52.9101,0</coordinates>
+</Point></Placemark>
+</Folder><Folder>
+<name>restaurant</name>
+<open>0</open>
+<Placemark>
+<name>Spice The Indian Restaurant</name>
+<address>95 London Rd,Grantham, NG31 6HS, United Kingdom</address>
+<Point>
+<coordinates>-0.636075,52.9048,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Windsor Fish Restaurant</name>
+<address>53-57 London Rd,Grantham, NG31 6ET, United Kingdom</address>
+<Point>
+<coordinates>-0.638078,52.9082,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>The Market Cross Fish Bar &amp; Restaurant</name>
+<address>9 Market Place,Grantham, NG31 6LJ, United Kingdom</address>
+<Point>
+<coordinates>-0.64394,52.9134,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Everest Inn Gurkha Restaurant</name>
+<address>7 Westgate,Grantham, NG31 6LT, United Kingdom</address>
+<Point>
+<coordinates>-0.643614,52.9119,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Dragon Inn Chinese Restaurant</name>
+<address>15 London Rd,Grantham, NG31 6EY, United Kingdom</address>
+<Point>
+<coordinates>-0.639116,52.9093,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Mr Man &amp; Pang Chinese Restaurant</name>
+<address>27-28 Wharf Rd,Grantham, NG31 6BG, United Kingdom</address>
+<Point>
+<coordinates>-0.642914,52.9091,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Ken Chinese Restaurant &amp; Takeaway</name>
+<address>47 London Rd,Grantham, NG31 6EU, United Kingdom</address>
+<Point>
+<coordinates>-0.638323,52.9085,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Siam Garden Thai Restaurant</name>
+<address>59a London Rd,Grantham, NG31 6ET, United Kingdom</address>
+<Point>
+<coordinates>-0.638078,52.9082,0</coordinates>
+</Point></Placemark>
+</Folder><Folder>
+<name>sports</name>
+<open>0</open>
+<Placemark>
+<name>Syntex Sports Surfacing Ltd</name>
+<address>Unit 11 Priest Court,Grantham, NG31 7BG, United Kingdom</address>
+<Point>
+<coordinates>-0.645959,52.9001,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Grantham Lawn Tennis Club</name>
+<address>Arnoldfield Sports Ground,Gonerby Rd, Grantham, NG31 8HU, United Kingdom</address>
+<Point>
+<coordinates>-0.653402,52.9243,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Grantham Rail Sports &amp; Social Club</name>
+<address>Huntingtower Rd,Grantham, NG31 7AU, United Kingdom</address>
+<Point>
+<coordinates>-0.646205,52.9051,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Cycle Sport Ltd</name>
+<address>33 London Rd,Grantham, NG31 6EX, United Kingdom</address>
+<Point>
+<coordinates>-0.638756,52.9089,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Charity Jones</name>
+<address>Guildhall St,Grantham, NG31 6NJ, United Kingdom</address>
+<Point>
+<coordinates>-0.643062,52.9115,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Alive Life &amp; Sport</name>
+<address>Unit 2 St. Augustine Retail Park,Grantham, NG31 6TG, United Kingdom</address>
+<Point>
+<coordinates>-0.646332,52.9111,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>JJB Sports</name>
+<address>Unit 39 Isaac Newton Centre,Grantham, NG31 6EE, United Kingdom</address>
+<Point>
+<coordinates>-0.642728,52.9098,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Kontak Sports &amp; Social Club</name>
+<address>40 Barrowby Rd,Grantham, NG31 6PD, United Kingdom</address>
+<Point>
+<coordinates>-0.646545,52.9157,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Allsports (Retail) Ltd</name>
+<address>Unit 3u Isaac Newton Centre,Grantham, NG31 6EE, United Kingdom</address>
+<Point>
+<coordinates>-0.642728,52.9098,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>The Indoor Cricket Centre Ltd</name>
+<address>Unit 2b Dysart Way Dysart Rd,Grantham, NG31 7EJ, United Kingdom</address>
+<Point>
+<coordinates>-0.64829,52.9112,0</coordinates>
+</Point></Placemark>
+</Folder><Folder>
+<name>travel</name>
+<open>0</open>
+<Placemark>
+<name>Thomas Cook Retail Ltd</name>
+<address>Unit 6 Isaac Newton Centre,Grantham, NG31 6EE, United Kingdom</address>
+<Point>
+<coordinates>-0.642728,52.9098,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Ilkeston Co-op Travel</name>
+<address>36 Isaac Newton Centre,Grantham, NG31 6EE, United Kingdom</address>
+<Point>
+<coordinates>-0.642728,52.9098,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Roma Travel Ltd</name>
+<address>14 Guildhall St,Grantham, NG31 6NJ, United Kingdom</address>
+<Point>
+<coordinates>-0.643062,52.9115,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Thomson</name>
+<address>36 High St,Grantham, NG31 6PH, United Kingdom</address>
+<Point>
+<coordinates>-0.641612,52.9117,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Travelcare</name>
+<address>29 High St,Grantham, NG31 6PH, United Kingdom</address>
+<Point>
+<coordinates>-0.641612,52.9117,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Travel Quest</name>
+<address>8-9 Westgate,Grantham, NG31 6LT, United Kingdom</address>
+<Point>
+<coordinates>-0.643614,52.9119,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Voyager</name>
+<address>99 Westgate,Grantham, NG31 6LE, United Kingdom</address>
+<Point>
+<coordinates>-0.644091,52.9119,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Quality Travel</name>
+<address>50 East St,Grantham, NG31 6QJ, United Kingdom</address>
+<Point>
+<coordinates>-0.640053,52.9121,0</coordinates>
+</Point></Placemark>
+<Placemark>
+<name>Global Flights</name>
+<address>99 Westgate,Grantham, NG31 6LE, United Kingdom</address>
+<Point>
+<coordinates>-0.644091,52.9119,0</coordinates>
+</Point></Placemark>
+</Folder>
+</kml>

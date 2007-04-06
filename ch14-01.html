@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>MCslp Maps Chapter 14, Ex 1</title>
+
+  <script src="http://maps.google.com/maps?file=api&v=1&key=YOURKEY"
+      type="text/javascript">
+  </script>
+
+<script type="text/javascript">
+var map;
+var geopoints = [];
+var photoids = [];
+
+function onLoad() {
+
+    if (GBrowserIsCompatible()) {
+        map = new GMap(document.getElementById("map"));
+	map.addControl(new GLargeMapControl());
+	map.addControl(new GMapTypeControl());
+	map.centerAndZoom(new GPoint(-79.3941593170166, 43.642659397433704),6);
+    }
+}
+
+function loadPhotos() {
+    photoids = [];
+    geopoints = [];
+    map.clearOverlays();
+
+    var request = new XMLHttpRequest();
+    
+    request.open('GET',
+		 '/examples/ch14-02flickrproxy.pl?method=flickr.photos.search&api_key=' + 
+		 '4160b6e24db6bcd6193150996df98f38' + '&user_id=54256647@N00' +
+		 '&tags=toronto,geotagged&tag_mode=all',true);
+    request.onreadystatechange = function() {
+	if (request.readyState == 4) {
+	    var xmlsource = request.responseXML;
+	    
+	    var photos = xmlsource.documentElement.getElementsByTagName("photo");
+	    for(i=0;i<photos.length;i++) {
+		var img = document.createElement('img');
+		photoids.push(photos[i].getAttribute('id'));
+	    }
+	    getphotoinfo(0);
+	}
+    }
+    request.send(null);
+}
+
+function getphotoinfo(index) 
+{
+    var request = new XMLHttpRequest();
+
+    request.open('GET',
+		 '/examples/ch14-02flickrproxy.pl?method=flickr.photos.getInfo&api_key=' + 
+		 '4160b6e24db6bcd6193150996df98f38' + '&photo_id=' + photoids[index], true);
+
+    request.onreadystatechange =  function() {
+	if (request.readyState == 4) {
+	    var xmlsource = request.responseXML;
+	    var tags = xmlsource.documentElement.getElementsByTagName("tag");
+	    for(i=0;i<tags.length;i++) {
+		var lat;
+		var lng;
+		if (tags[i].getAttribute('raw').indexOf('geo:lon') == 0) {
+		    var elems = tags[i].getAttribute('raw').split('=');
+		    lng = elems[1];
+		}
+		if (tags[i].getAttribute('raw').indexOf('geo:lat') == 0) {
+		    var elems = tags[i].getAttribute('raw').split('=');
+		    lat = elems[1];
+		}
+		if (lat && lng) {
+		    var point = new GPoint(parseFloat(lng),parseFloat(lat));
+		    var marker = new GMarker(point);
+		    map.addOverlay(marker);
+		    GEvent.addListener(marker,
+				       'click',
+				       function() {
+			marker.openInfoWindowXslt(xmlsource,"/examples/ch14-02.xsl");
+		    }
+				       );
+		    geopoints.push(point);
+		}
+	    }
+	    index++;
+	    if (index < photoids.length) { 
+		getphotoinfo(index);
+	    } else {
+		recenterandzoom(geopoints);
+	    }
+	}
+    }
+
+    request.send(null);
+}
+
+function recenterandzoom(points) {
+    var latpoints = [];
+    var lngpoints = [];
+
+    var idealzoom = 1;
+
+    if (points.length == 0) {
+	return;
+    }
+
+    if (points.length == 1) {
+	map.centerAndZoom(points[0],idealzoom);
+	return;
+    }
+
+    for(var i=0;i<points.length;i++) {
+	latpoints.push(points[i].y);
+	lngpoints.push(points[i].x);
+    }
+
+    latpoints.sort();
+    lngpoints.sort();
+    var newlat = latpoints[0] + ((latpoints[latpoints.length-1] - latpoints[0])/2);
+    var newlng = lngpoints[0] + ((lngpoints[lngpoints.length-1] - lngpoints[0])/2);
+
+    var newpoint = new GPoint(parseFloat(newlng),parseFloat(newlat));
+
+    var idealspan = new GSize(parseFloat(Math.abs(lngpoints[lngpoints.length-1]-lngpoints[0])),
+			      parseFloat(Math.abs(latpoints[latpoints.length-1]-latpoints[0])));
+
+    map.zoomTo(idealzoom);
+
+    for(var i=1;i<16;i++) {
+	var currentsize = map.getSpanLatLng();
+		if ((currentsize.width < idealspan.width) ||
+	    (currentsize.height < idealspan.height)) {
+	    map.zoomTo(i);
+	    idealzoom = i;
+	}		
+	else {
+	    break;
+	}
+    }
+
+    map.centerAndZoom(newpoint,idealzoom);
+}
+
+  </script>
+  </head>
+  <body onload="onLoad()">
+<a href="#" onClick="loadPhotos()">Load photos</a><br/>
+    <div id="map" style="width: 800px; height: 600px"></div>
+  </body>
+</html>

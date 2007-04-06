@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+  <title>MCslp Maps Chapter 7, Ex 7</title>
+  <script src="http://maps.google.com/maps?file=api&v=1&key=YOURKEY"
+      type="text/javascript">
+  </script>
+
+  <script type="text/javascript">
+  //<![CDATA[
+
+  var map;
+
+  function onLoad() {
+    if (GBrowserIsCompatible()) {
+    map = new GMap(document.getElementById("map"));
+    map.centerAndZoom(new GPoint(-0.64,52.909444), 2);
+    addmarker(-0.6394,52.9114);
+    addmarker(-0.64,52.909444);
+    addmarker(-0.6376,52.9073);
+     boundingbox(-0.6488,52.9157,-0.6292,52.9027);
+    }
+  }
+
+
+    function boundingbox(tlx,tly,brx,bry) {
+	var box = [];
+	box.push(new GPoint(tlx,tly));
+	box.push(new GPoint(brx,tly));
+	box.push(new GPoint(brx,bry));
+	box.push(new GPoint(tlx,bry));
+	box.push(new GPoint(tlx,tly));
+	map.addOverlay(new GPolyline(box));
+    }
+
+  function addmarker(x,y) {
+      var point = new GPoint(parseFloat(x),parseFloat(y));
+      map.addOverlay(new GMarker(point));
+  }    
+
+  //]]>
+  </script>
+  </head>
+  <body onload="onLoad()">
+
+  <div id="map" style="width: 800px; height: 600px"></div>
+<ul>
+</ul>
+  </body>
+</html>
